@@ -1,0 +1,340 @@
+{
+  "client_id": "db19f158b2ad47df86151c323ea0b5b4",
+  "extra_data": {
+    "extra_pnginfo": {
+      "workflow": {
+        "config": {},
+        "extra": {
+          "ds": {
+            "offset": {
+              "0": 0,
+              "1": 0
+            },
+            "scale": 1
+          }
+        },
+        "groups": [],
+        "last_link_id": 17,
+        "last_node_id": 12,
+        "links": [
+          [2, 5, 0, 3, 3, "LATENT"],
+          [4, 6, 0, 3, 1, "CONDITIONING"],
+          [5, 4, 1, 7, 0, "CLIP"],
+          [6, 7, 0, 3, 2, "CONDITIONING"],
+          [7, 3, 0, 8, 0, "LATENT"],
+          [8, 4, 2, 8, 1, "VAE"],
+          [15, 8, 0, 9, 0, "IMAGE"],
+          [16, 4, 1, 6, 0, "CLIP"],
+          [17, 4, 0, 3, 0, "MODEL"]
+        ],
+        "nodes": [
+          {
+            "flags": {},
+            "id": 7,
+            "inputs": [
+              {
+                "label": "CLIP",
+                "link": 5,
+                "name": "clip",
+                "type": "CLIP"
+              }
+            ],
+            "mode": 0,
+            "order": 2,
+            "outputs": [
+              {
+                "label": "条件",
+                "links": [6],
+                "name": "CONDITIONING",
+                "slot_index": 0,
+                "type": "CONDITIONING"
+              }
+            ],
+            "pos": [441, 578],
+            "properties": {
+              "Node name for S&R": "CLIPTextEncode"
+            },
+            "size": {
+              "0": 425.27801513671875,
+              "1": 180.6060791015625
+            },
+            "type": "CLIPTextEncode",
+            "widgets_values": [
+              "Ugly,Bad anatomy, Bad proportions, Bad quality, Blurry, Cropped, Deformed, Disconnected limbs, Out of frame, Out of focus, Dehydrated, Error, Disfigured, Disgusting, Extra arms, Extra limbs, Extra hands, Fused fingers, Gross proportions, Long neck, Low res, Low quality, Jpeg, Jpeg artifacts, Malformed limbs, Mutated, Mutated hands, Mutated limbs, Missing arms, Missing fingers, Picture frame, Poorly drawn hands, Poorly drawn face, Text, Signature, Username, Watermark, Worst quality, Collage, Pixel, Pixelated, Grainy "
+            ]
+          },
+          {
+            "flags": {},
+            "id": 8,
+            "inputs": [
+              {
+                "label": "Latent",
+                "link": 7,
+                "name": "samples",
+                "type": "LATENT"
+              },
+              {
+                "label": "VAE",
+                "link": 8,
+                "name": "vae",
+                "type": "VAE"
+              }
+            ],
+            "mode": 0,
+            "order": 5,
+            "outputs": [
+              {
+                "label": "图像",
+                "links": [15],
+                "name": "IMAGE",
+                "slot_index": 0,
+                "type": "IMAGE"
+              }
+            ],
+            "pos": [1255, 506],
+            "properties": {
+              "Node name for S&R": "VAEDecode"
+            },
+            "size": {
+              "0": 210,
+              "1": 46
+            },
+            "type": "VAEDecode"
+          },
+          {
+            "flags": {},
+            "id": 6,
+            "inputs": [
+              {
+                "label": "CLIP",
+                "link": 16,
+                "name": "clip",
+                "type": "CLIP"
+              }
+            ],
+            "mode": 0,
+            "order": 3,
+            "outputs": [
+              {
+                "label": "条件",
+                "links": [4],
+                "name": "CONDITIONING",
+                "slot_index": 0,
+                "type": "CONDITIONING"
+              }
+            ],
+            "pos": [449, 355],
+            "properties": {
+              "Node name for S&R": "CLIPTextEncode"
+            },
+            "size": {
+              "0": 422.84503173828125,
+              "1": 164.31304931640625
+            },
+            "type": "CLIPTextEncode",
+            "widgets_values": [
+              "portrait of a 7-year-old boy, calm face, petting a cat, soft smile, sitting on a couch, A scene from a living room, cozy cushions and a window with sunlight,  dramatic desert landscape, rolling sand dunes, bright blue sky, a few scattered cacti, heat waves in the distance, joyful pixel art, gentle, sunny light"
+            ]
+          },
+          {
+            "flags": {},
+            "id": 9,
+            "inputs": [
+              {
+                "label": "图像",
+                "link": 15,
+                "name": "images",
+                "type": "IMAGE"
+              }
+            ],
+            "mode": 0,
+            "order": 6,
+            "pos": [1502, 523],
+            "properties": {},
+            "size": {
+              "0": 210,
+              "1": 270
+            },
+            "type": "SaveImage",
+            "widgets_values": ["ComfyUI"]
+          },
+          {
+            "flags": {},
+            "id": 5,
+            "mode": 0,
+            "order": 0,
+            "outputs": [
+              {
+                "label": "Latent",
+                "links": [2],
+                "name": "LATENT",
+                "slot_index": 0,
+                "type": "LATENT"
+              }
+            ],
+            "pos": [470, 814],
+            "properties": {
+              "Node name for S&R": "EmptyLatentImage"
+            },
+            "size": {
+              "0": 315,
+              "1": 106
+            },
+            "type": "EmptyLatentImage",
+            "widgets_values": [512, 512, 1]
+          },
+          {
+            "flags": {},
+            "id": 4,
+            "mode": 0,
+            "order": 1,
+            "outputs": [
+              {
+                "label": "模型",
+                "links": [17],
+                "name": "MODEL",
+                "slot_index": 0,
+                "type": "MODEL"
+              },
+              {
+                "label": "CLIP",
+                "links": [5, 16],
+                "name": "CLIP",
+                "slot_index": 1,
+                "type": "CLIP"
+              },
+              {
+                "label": "VAE",
+                "links": [8],
+                "name": "VAE",
+                "slot_index": 2,
+                "type": "VAE"
+              }
+            ],
+            "pos": [30, 451],
+            "properties": {
+              "Node name for S&R": "CheckpointLoaderSimple"
+            },
+            "size": {
+              "0": 315,
+              "1": 98
+            },
+            "type": "CheckpointLoaderSimple",
+            "widgets_values": ["realisticStockPhoto_v30SD15.safetensors"]
+          },
+          {
+            "flags": {},
+            "id": 3,
+            "inputs": [
+              {
+                "label": "模型",
+                "link": 17,
+                "name": "model",
+                "type": "MODEL"
+              },
+              {
+                "label": "正面条件",
+                "link": 4,
+                "name": "positive",
+                "type": "CONDITIONING"
+              },
+              {
+                "label": "负面条件",
+                "link": 6,
+                "name": "negative",
+                "type": "CONDITIONING"
+              },
+              {
+                "label": "Latent",
+                "link": 2,
+                "name": "latent_image",
+                "type": "LATENT"
+              }
+            ],
+            "mode": 0,
+            "order": 4,
+            "outputs": [
+              {
+                "label": "Latent",
+                "links": [7],
+                "name": "LATENT",
+                "slot_index": 0,
+                "type": "LATENT"
+              }
+            ],
+            "pos": [910, 501],
+            "properties": {
+              "Node name for S&R": "KSampler"
+            },
+            "size": {
+              "0": 315,
+              "1": 262
+            },
+            "type": "KSampler",
+            "widgets_values": [1, "randomize", 20, 6, "euler", "karras", 1]
+          }
+        ],
+        "version": 0.4
+      }
+    }
+  },
+  "prompt": {
+    "3": {
+      "class_type": "KSampler",
+      "inputs": {
+        "cfg": 6,
+        "denoise": 1,
+        "latent_image": ["5", 0],
+        "model": ["4", 0],
+        "negative": ["7", 0],
+        "positive": ["6", 0],
+        "sampler_name": "euler",
+        "scheduler": "karras",
+        "seed": 1,
+        "steps": 20
+      }
+    },
+    "4": {
+      "class_type": "CheckpointLoaderSimple",
+      "inputs": {
+        "ckpt_name": "realisticStockPhoto_v30SD15.safetensors"
+      }
+    },
+    "5": {
+      "class_type": "EmptyLatentImage",
+      "inputs": {
+        "batch_size": 1,
+        "height": 512,
+        "width": 512
+      }
+    },
+    "6": {
+      "class_type": "CLIPTextEncode",
+      "inputs": {
+        "clip": ["4", 1],
+        "text": "portrait of a 7-year-old boy, calm face, petting a cat, soft smile, sitting on a couch, A scene from a living room, cozy cushions and a window with sunlight,  dramatic desert landscape, rolling sand dunes, bright blue sky, a few scattered cacti, heat waves in the distance, joyful pixel art, gentle, sunny light"
+      }
+    },
+    "7": {
+      "class_type": "CLIPTextEncode",
+      "inputs": {
+        "clip": ["4", 1],
+        "text": "Ugly,Bad anatomy, Bad proportions, Bad quality, Blurry, Cropped, Deformed, Disconnected limbs, Out of frame, Out of focus, Dehydrated, Error, Disfigured, Disgusting, Extra arms, Extra limbs, Extra hands, Fused fingers, Gross proportions, Long neck, Low res, Low quality, Jpeg, Jpeg artifacts, Malformed limbs, Mutated, Mutated hands, Mutated limbs, Missing arms, Missing fingers, Picture frame, Poorly drawn hands, Poorly drawn face, Text, Signature, Username, Watermark, Worst quality, Collage, Pixel, Pixelated, Grainy "
+      }
+    },
+    "8": {
+      "class_type": "VAEDecode",
+      "inputs": {
+        "samples": ["3", 0],
+        "vae": ["4", 2]
+      }
+    },
+    "9": {
+      "class_type": "SaveImage",
+      "inputs": {
+        "filename_prefix": "ComfyUI",
+        "images": ["8", 0]
+      }
+    }
+  }
+}
