@@ -16,7 +16,7 @@ docker_deploy:
   script:
     - docker stop auto-comfy-generate-image || true
     - docker rm auto-comfy-generate-image || true
-    - docker run -d --name auto-comfy-generate-image -p 8090:8080 auto-comfy-generate-image:latest
+    - docker run -d --name auto-comfy-generate-image -p 8091:8080 auto-comfy-generate-image:latest
   only:
     - main
     
