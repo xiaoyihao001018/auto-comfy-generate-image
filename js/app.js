@@ -1,4 +1,5 @@
 import customFetch from "./customFetch.js";
+
 let prompts = [];
 let jsonData;
 const generateButton = document.querySelector("#generateButton");
@@ -71,8 +72,12 @@ async function runPrompts() {
       console.log("Server response:", serverResponse);
 
       // 异步等待3秒，这里也可以考虑根据实际情况动态调整
-      await delay(3000);
-      const paddedIndex = (serverResponse.number + 1)
+      await delay(5000);
+      const paddedIndex = (
+        serverResponse.number > 0
+          ? serverResponse.number
+          : serverResponse.number + 1
+      )
         .toString()
         .padStart(5, "0");
       const imageUrl = `${baseUrl}${paddedIndex}_.png&subfolder=&type=output`;
@@ -80,12 +85,10 @@ async function runPrompts() {
 
       if (imageDataResponse.ok) {
         results.push({
-          prompt: prompts[i],
           imageUrl: imageUrl,
         });
       } else {
         results.push({
-          prompt: prompts[i],
           imageUrl: imageUrl,
           error: `从索引处获取图像失败 ${i + 1}. 请手动检查.`,
         });
@@ -110,28 +113,31 @@ function delay(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
-function writeFile(data) {
-  // 创建一个Blob对象，它表示一个不可变的、原始数据的类文件对象。
-  const blob = new Blob([JSON.stringify(data, null, 2)], {
-    type: "application/json",
+async function writeFile(data) {
+
+  const workbook = new ExcelJS.Workbook();
+  const worksheet = workbook.addWorksheet("Results");
+
+  // 添加表头
+  worksheet.columns = [
+    {  key: "imageUrl", width: 150 },
+  ];
+
+  // 添加行数据
+  data.forEach((item) => {
+    worksheet.addRow(item);
   });
 
-  // 创建一个指向用户选择的文件的URL。
-  const url = URL.createObjectURL(blob);
-
-  // 创建隐藏的可下载链接
-  const link = document.createElement("a");
-  link.style.display = "none";
-  link.href = url;
-  link.download = "output.json"; // 设置下载文件名
-
-  // 将链接插入到DOM中
-  document.body.appendChild(link);
-
-  // 触发点击
-  link.click();
-
-  // 稍后清理
-  document.body.removeChild(link);
-  URL.revokeObjectURL(url);
+  // 使用Blob保存Excel文件（适用于浏览器环境）
+  workbook.xlsx.writeBuffer().then(function (buffer) {
+    const blob = new Blob([buffer], {
+      type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+    });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = "output.xlsx";
+    link.click();
+    URL.revokeObjectURL(url);
+  });
 }
